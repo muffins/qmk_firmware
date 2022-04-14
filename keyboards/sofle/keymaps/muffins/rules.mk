@@ -3,5 +3,5 @@ RGBLIGHT_ENABLE = yes
 ENCODER_ENABLE = yes
 OLED_ENABLE = yes
 OLED_DRIVER = SSD1306
-
+WPM_ENABLE = yes
 SRC += oled.c encoder.c
