@@ -190,6 +190,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
+#ifdef RGBLIGHT_ENABLE
+void keyboard_post_init_user(void) {
+	rgblight_mode(10);// haven't found a way to set this in a more useful way
+}
+#endif
+
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
