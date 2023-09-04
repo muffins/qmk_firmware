@@ -108,6 +108,90 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 };
 
+#ifdef OLED_ENABLE
+static void render_logo(void) {
+    static const char PROGMEM qmk_logo[] = {
+        0x80, 0x81, 0x82, 0x83, 0x84, 0x85, 0x86, 0x87, 0x88, 0x89, 0x8A, 0x8B, 0x8C, 0x8D, 0x8E, 0x8F, 0x90, 0x91, 0x92, 0x93, 0x94,
+        0xA0, 0xA1, 0xA2, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7, 0xA8, 0xA9, 0xAA, 0xAB, 0xAC, 0xAD, 0xAE, 0xAF, 0xB0, 0xB1, 0xB2, 0xB3, 0xB4,
+        0xC0, 0xC1, 0xC2, 0xC3, 0xC4, 0xC5, 0xC6, 0xC7, 0xC8, 0xC9, 0xCA, 0xCB, 0xCC, 0xCD, 0xCE, 0xCF, 0xD0, 0xD1, 0xD2, 0xD3, 0xD4, 0x00
+    };
+    oled_write_P(qmk_logo, false);
+}
+
+static void print_status_narrow(void) {
+
+    // Print current mode
+    oled_write_P(PSTR("\n"), false);
+    switch (get_highest_layer(default_layer_state)) {
+        case _WINDOWS:
+            oled_write_raw_P(win_logo, sizeof(win_logo));
+            oled_write_ln_P(PSTR("win"), false);
+            break;
+        case _MACOS:
+            oled_write_raw_P(mac_logo, sizeof(mac_logo));
+            oled_write_ln_P(PSTR("mac"), false);
+            break;
+        case _MOD:
+            oled_write_P(PSTR("\n\n"), false);
+            oled_write_ln_P(PSTR("mod"), false);
+            break;
+        default:
+            oled_write_ln_P(PSTR("Undef"), false);
+    }
+    oled_write_P(PSTR("\n\n"), false);
+
+    oled_write_ln_P(PSTR("LAYER"), false);
+    switch (get_highest_layer(layer_state)) {
+        case _WINDOWS:
+        case _MACOS:
+            oled_write_P(PSTR("Base"), false);
+            break;
+        case _MOD:
+            oled_write_P(PSTR("Raise"), false);
+            break;
+        default:
+            oled_write_ln_P(PSTR("Undef"), false);
+    }
+}
+
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+    if (is_keyboard_master()) {
+        return OLED_ROTATION_270;
+    }
+    return rotation;
+}
+
+bool oled_task_user(void) {
+    if (is_keyboard_master()) {
+        print_status_narrow();
+    } else {
+        render_logo();
+    }
+    return false;
+}
+#endif
+
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_WINDOWS:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_WINDOWS);
+            }
+            return false;
+        case KC_MACOS:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_MACOS);
+            }
+            return false;
+        case KC_MOD:
+            if (record->event.pressed) {
+                set_single_persistent_default_layer(_MOD);
+            }
+            return false;
+    }
+    return true;
+}
+
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
