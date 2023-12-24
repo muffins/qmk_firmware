@@ -76,7 +76,7 @@
 #endif
 
 #ifdef RGB_MATRIX_ENABLE
-#   define RGB_MATRIX_KEYPRESSES // reacts to keypresses
+// #   define RGB_MATRIX_KEYPRESSES // reacts to keypresses
 // #   define RGB_MATRIX_KEYRELEASES // reacts to keyreleases (instead of keypresses)
 #   define RGB_MATRIX_SLEEP // turn off effects when suspended
 #   define RGB_MATRIX_FRAMEBUFFER_EFFECTS
