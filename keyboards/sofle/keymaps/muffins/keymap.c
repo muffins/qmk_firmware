@@ -16,7 +16,14 @@
 
 #include QMK_KEYBOARD_H
 
-// #define INDICATOR_BRIGHTNESS 30
+#ifdef ENCODER_MAP_ENABLE
+const uint16_t PROGMEM encoder_map[][NUM_ENCODERS][NUM_DIRECTIONS] = {
+    [0] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),           ENCODER_CCW_CW(KC_PGDN, KC_PGUP) },
+    [1] = { ENCODER_CCW_CW(KC_VOLD, KC_VOLU),           ENCODER_CCW_CW(KC_PGDN, KC_PGUP) },
+    // [2] = { ENCODER_CCW_CW(RGB_HUD, RGB_HUI),           ENCODER_CCW_CW(RGB_SAD, RGB_SAI) },
+    [2] = { ENCODER_CCW_CW(RGB_VAD, RGB_VAI),           ENCODER_CCW_CW(RGB_RMOD, RGB_MOD)}
+};
+#endif
 
 /* 32 * 14 os logos */
 static const char PROGMEM win_logo[] = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xbc, 0xbc, 0xbe, 0xbe, 0x00, 0xbe, 0xbe, 0xbf, 0xbf, 0xbf, 0xbf, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x07, 0x07, 0x0f, 0x0f, 0x00, 0x0f, 0x0f, 0x1f, 0x1f, 0x1f, 0x1f, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -106,6 +113,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 };
 
+
 #ifdef OLED_ENABLE
 static void render_logo(void) {
     static const char PROGMEM qmk_logo[] = {
@@ -190,27 +198,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 }
 
-#ifdef RGBLIGHT_ENABLE
-void keyboard_post_init_user(void) {
-	rgblight_mode(10);// haven't found a way to set this in a more useful way
-}
-#endif
-
-#ifdef ENCODER_ENABLE
-bool encoder_update_user(uint8_t index, bool clockwise) {
-    if (index == 0) {
-        if (clockwise) {
-            tap_code(KC_VOLU);
-        } else {
-            tap_code(KC_VOLD);
-        }
-		} else if (index == 1) {
-        if (clockwise) {
-          tap_code(KC_PGDN);
-        } else {
-          tap_code(KC_PGUP);
-        }
-    }
-    return true;
-}
-#endif
+// #ifdef ENCODER_ENABLE
+// bool encoder_update_user(uint8_t index, bool clockwise) {
+//     if (index == 0) {
+//         if (clockwise) {
+//             tap_code(KC_VOLU);
+//         } else {
+//             tap_code(KC_VOLD);
+//         }
+// 		} else if (index == 1) {
+//         if (clockwise) {
+//           tap_code(KC_PGDN);
+//         } else {
+//           tap_code(KC_PGUP);
+//         }
+//     }
+//     return true;
+// }
+// #endif
