@@ -17,3 +17,16 @@ Features:
 - Left encoder controls volume up/down/mute. Right encoder PGUP/PGDOWN.
 
 
+### Flashing SeaMicros:
+```
+
+```
+
+
+### Flashing KB2040:
+```
+Push reset button twice to enter bootloader
+Compile in QMK with
+$ qmk compile -kb sofle/rev1 -km muffins -e CONVERT_TO=kb2040
+Drag and drop UF2 to folder
+```
