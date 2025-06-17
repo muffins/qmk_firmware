@@ -1,0 +1,64 @@
+{
+    "manufacturer": "Nick Anderson",
+    "keyboard_name": "bento",
+    "maintainer": "Nick Anderson",
+    "development_board": "promicro",
+    "diode_direction": "COL2ROW",
+    "processor": "atmega32u4",
+    "bootloader": "caterina",
+    "features": {
+        "bootmagic": false,
+        "extrakey": true,
+        "mousekey": false,
+        "nkro": false,
+        "backlight": true,
+        "encoder": true
+
+    },
+    "matrix_pins": {
+        "cols": ["D2", "D4", "F4"],
+        "rows": ["D7", "B1", "B3"]
+    },
+    "encoder": {
+        "rotary": [
+            {"pin_a": "D1", "pin_b": "F5"}
+        ]
+    },
+    "rgblight": {
+        "led_count": 3,
+        "animations": {
+            "breathing": true,
+            "rainbow_mood": true,
+            "rainbow_swirl": true,
+            "snake": true,
+            "knight": true,
+            "christmas": true,
+            "static_gradient": true,
+            "rgb_test": true,
+            "alternating": true,
+            "twinkle": true
+        }
+    },
+    "backlight": {
+        "pin": "B6",
+        "breathing": true
+    },
+    "url": "",
+    "usb": {
+        "device_version": "1.0.0",
+        "pid": "0x1133",
+        "vid": "0xCB10"
+    },
+    "layouts": {
+        "LAYOUT": {
+            "layout": [
+                {"matrix": [0, 0], "x":0, "y":0},
+                {"matrix": [1, 0], "x":1, "y":0},
+                {"matrix": [2, 0], "x":2, "y":0},
+                {"matrix": [0, 1], "x":0, "y":1},
+                {"matrix": [1, 1], "x":1, "y":1},
+                {"matrix": [2, 1], "x":2, "y":1}
+            ]
+        }
+    }
+}
